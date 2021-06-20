@@ -20,7 +20,6 @@ MuseScore {
             Qt.quit();
 
         //TODO disable tracks by bool in SonicPi
-        //TODO disable metrum by bool in SonicPi
         //TODO detect numerator / denominator
         //TODO Tie/Slur-Support
         //TODO create better beat
@@ -121,6 +120,7 @@ MuseScore {
         returnString += " \r\n";
 
         if(hasMetronome){
+            returnString += "enableBeat = true"; //TODO
             returnString += "simpleMetronomeBeat = ' 966 '  # Number for 0.1 amp or - for nothing \r\n"; //TODO
             returnString += "simpleMetronomeBeatSleep = 0.5 \r\n"; //TODO
             returnString += "simpleMetronomeAmpMultiplier = 5 \r\n";
@@ -173,6 +173,9 @@ MuseScore {
             returnString += "end \r\n";
             returnString += " \r\n";
             returnString += "live_loop :metronome do \r\n"
+            returnString += "if(!enableBeat) \r\n"
+            returnString += "stop \r\n"
+            returnString += "end \r\n"
             returnString += "tick('metronome') \r\n"
             returnString += "if (pat(simpleMetronomeBeat).look('metronome')) > 0.0 \r\n"
             returnString += "sample :perc_snap,        amp: (pat(simpleMetronomeBeat).look('metronome')) * simpleMetronomeAmpMultiplier \r\n"

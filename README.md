@@ -13,7 +13,6 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 
 # Todos
 - disable tracks by bool in SonicPi
-- disable metrum by bool in SonicPi
 - detect numerator / denominator
 - Tie/Slur-Support
 - create better beat
