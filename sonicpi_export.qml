@@ -22,7 +22,6 @@ MuseScore {
         //TODO disable tracks by bool in SonicPi
         //TODO disable metrum by bool in SonicPi
         //TODO detect numerator / denominator
-        //TODO Remove Staff with no content
         //TODO Tie/Slur-Support
         //TODO create better beat
         //TODO name tracks correct
@@ -35,7 +34,7 @@ MuseScore {
         var isMidi = 1; //TODO UI
         var hasMetronome = 1; //TODO UI
         var scoreName = curScore.scoreName
-        var outputFile = sonicFile.source + "/" + scoreName + ".rb"
+        var outputFile = sonicFile.source + "/" + scoreName + ".rb" //TODO UI
 
 
         var cursor = curScore.newCursor()
@@ -47,6 +46,7 @@ MuseScore {
 
         for (var staff=0; staff<curScore.nstaves; staff++) {
             for (var i=0; i<4; i++) {
+                var hasContent = false;
                 mapPitches.set(staff + "_" +  i, "");
                 mapRests.set(staff + "_" +  i, "");
                 var currentStaff = (staff*4) +i;
@@ -69,6 +69,7 @@ MuseScore {
                             var duration = ((element.globalDuration.numerator /element.globalDuration.denominator)*4.0)
                             lastTick += (duration*480)
                             for (var j=0; j<element.notes.length; j++) {
+                                hasContent = true;
                                 s += element.notes[j].pitch + ",";
                                 if(j == element.notes.length-1){
                                     r += duration + ",";
@@ -91,9 +92,11 @@ MuseScore {
                     r += duration + ","
                     lastTick = cursor.tick
                 }
-                var st = staff + "_" +  i;
-                mapPitches.set(st, mapPitches.get(st) + s);
-                mapRests.set(st, mapRests.get(st) + r);
+                if(hasContent){
+                    var st = staff + "_" +  i;
+                    mapPitches.set(st, mapPitches.get(st) + s);
+                    mapRests.set(st, mapRests.get(st) + r);
+                }
             }
         }
 
