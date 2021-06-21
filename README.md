@@ -10,9 +10,9 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 
 # Limitations
 - No Support for repeatings. Use "Tools > Unroll Repeats"
+- No support for changing BPM
 
 # Todos
-- disable tracks by bool in SonicPi
 - detect numerator / denominator
 - Tie/Slur-Support
 - create better beat

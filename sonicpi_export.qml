@@ -19,7 +19,6 @@ MuseScore {
         if (typeof curScore === 'undefined')
             Qt.quit();
 
-        //TODO disable tracks by bool in SonicPi
         //TODO detect numerator / denominator
         //TODO Tie/Slur-Support
         //TODO create better beat
@@ -119,8 +118,15 @@ MuseScore {
         returnString += "quarterPerMeasure = numerator/(denominator/4.0) \r\n";
         returnString += " \r\n";
 
+        for (var key of mapPitches.keys()) {
+            if(mapPitches.get(key)  !== ""){
+                returnString += ("playTrack_" + key + "=1 \r\n");
+            }
+        }
+        returnString += " \r\n";
+
         if(hasMetronome){
-            returnString += "enableBeat = true"; //TODO
+            returnString += "enableBeat = true \r\n"; //TODO
             returnString += "simpleMetronomeBeat = ' 966 '  # Number for 0.1 amp or - for nothing \r\n"; //TODO
             returnString += "simpleMetronomeBeatSleep = 0.5 \r\n"; //TODO
             returnString += "simpleMetronomeAmpMultiplier = 5 \r\n";
@@ -188,6 +194,11 @@ MuseScore {
         for (var key of mapPitches.keys()) {
             if(mapPitches.get(key)  !== ""){
                 returnString += ("live_loop :loop_" + key + " do\r\n");
+
+                returnString += ("if playTrack_" + key + " == 0 \r\n");
+                returnString += ("stop \r\n");
+                returnString += ("end \r\n");
+
                 returnString += "pitches = [" + mapPitches.get(key) + "] \r\n";
                 returnString += "rests = [" + mapRests.get(key) + "] \r\n";
                 if(isMidi){
