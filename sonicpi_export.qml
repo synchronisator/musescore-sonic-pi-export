@@ -1,10 +1,16 @@
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.3
+import QtQuick.Layouts 1.1
+import QtQuick.Window 2.2
+
 import MuseScore 3.0
 import FileIO 3.0
 
 MuseScore {
     menuPath: "Plugins.SonicPiExporter"
     description: "Exports the selected Score to a nameOfScore.rb in your Homedirectory"
+    pluginType: "dialog"
     requiresScore: true;
     version: "1.0"
 
@@ -18,9 +24,12 @@ MuseScore {
     onRun: {
         if (typeof curScore === 'undefined')
             Qt.quit();
+    }
 
-        var isMidi = 1; //TODO UI
-        var hasMetronome = 1; //TODO UI
+    function exportScore() {
+
+        var isMidi = isMidiID.checked;
+        var hasMetronome = hasMetronomeID.checked;
         var scoreName = curScore.scoreName
         var outputFile = sonicFile.source + "/" + scoreName + ".rb" //TODO UI
 
@@ -218,4 +227,55 @@ MuseScore {
         console.log("Successfull? " + sonicFile.write(returnString))
         Qt.quit()
    }
+
+
+
+    ColumnLayout {
+    CheckBox {
+        id: isMidiID
+        text: "isMidi"
+        checked: true
+                onCheckedChanged: {
+            console.log(checked)
+        }
+    }
+    CheckBox {
+        id: hasMetronomeID
+        text: "hasMetronome"
+        checked: true
+                onCheckedChanged: {
+            console.log(checked)
+        }
+    }
+    RowLayout {
+        Button {
+              id: applyButton
+              text: "OK"
+              onClicked: {
+                    exportScore();
+                    Qt.quit();
+              }
+        }
+        Button {
+              id: cancelButton
+              text: "Cancel"
+              onClicked: {
+                    Qt.quit();
+              }
+        }
+        }
+
+    }
+
+    Keys.onEscapePressed: {
+        Qt.quit();
+    }
+    Keys.onReturnPressed: {
+        exportScore();
+        Qt.quit();
+    }
+    Keys.onEnterPressed: {
+        exportScore();
+        Qt.quit();
+    }
 }
