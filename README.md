@@ -15,8 +15,6 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 
 # Todos
 - Tie/Slur-Support
-- name tracks correct
-  
 - Create UI
     - midi or not
     - metronome or not

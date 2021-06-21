@@ -37,12 +37,12 @@ MuseScore {
         for (var staff=0; staff<curScore.nstaves; staff++) {
             for (var i=0; i<4; i++) {
                 var hasContent = false;
-                mapPitches.set(staff + "_" +  i, "");
-                mapRests.set(staff + "_" +  i, "");
                 var currentStaff = (staff*4) +i;
                 var cursor = curScore.newCursor()
                 cursor.rewind(0)
                 cursor.track = currentStaff
+
+                var staffName = null
                 var lastTick = 0
                 var s = "";
                 var r = "";
@@ -55,6 +55,11 @@ MuseScore {
                     }
                     var element = cursor.segment.elementAt(currentStaff);
                     if(element !== null){
+                        if(staffName == null){
+                            staffName = element.staff.part.longName
+                            mapPitches.set(staffName + "_" + staff + "_" +  i, "");
+                            mapRests.set(staffName + "_" + staff + "_" +  i, "");
+                        }
                         if (element.type === Element.CHORD) {
                             var duration = ((element.globalDuration.numerator /element.globalDuration.denominator)*4.0)
                             lastTick += (duration*480)
@@ -83,7 +88,7 @@ MuseScore {
                     lastTick = cursor.tick
                 }
                 if(hasContent){
-                    var st = staff + "_" +  i;
+                    var st = staffName + "_" + staff + "_" +  i;
                     mapPitches.set(st, mapPitches.get(st) + s);
                     mapRests.set(st, mapRests.get(st) + r);
                 }
