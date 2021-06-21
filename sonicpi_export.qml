@@ -112,7 +112,7 @@ MuseScore {
 
         for (var key of mapPitches.keys()) {
             if(mapPitches.get(key)  !== ""){
-                returnString += ("playTrack_" + key + "=1 \r\n");
+                returnString += ("playTrack_" + key + " = 1 \r\n");
             }
         }
         returnString += " \r\n";
@@ -129,9 +129,11 @@ MuseScore {
         }
 
         returnString += " \r\n";
-        returnString += "use_midi_defaults channel: 1, port: 'Midi Through Port-0' \r\n";
-        returnString += "midi_pc 12, channel: 1 \r\n";
-        returnString += " \r\n";
+        if(isMidi){
+            returnString += "use_midi_defaults channel: 1, port: 'Midi Through Port-0' \r\n";
+            returnString += "midi_pc 12, channel: 1 \r\n";
+            returnString += " \r\n";
+        }
         returnString += "define :play_timed do |channel, notes, times, **args| \r\n";
         returnString += "ts = times.ring \r\n";
         returnString += "measure = 0 \r\n";
@@ -180,7 +182,7 @@ MuseScore {
             returnString += "end \r\n"
             returnString += "tick('metronome') \r\n"
             returnString += "if (pat(simpleMetronomeBeat).look('metronome')) > 0.0 \r\n"
-            returnString += "sample :perc_snap,        amp: (pat(simpleMetronomeBeat).look('metronome')) * simpleMetronomeAmpMultiplier \r\n"
+            returnString += "sample :perc_snap, amp: (pat(simpleMetronomeBeat).look('metronome')) * simpleMetronomeAmpMultiplier \r\n"
             returnString += "end \r\n"
             returnString += "sleep simpleMetronomeBeatSleep \r\n"
             returnString += "end \r\n"
