@@ -19,7 +19,6 @@ MuseScore {
         if (typeof curScore === 'undefined')
             Qt.quit();
 
-        //TODO detect numerator / denominator
         //TODO Tie/Slur-Support
         //TODO create better beat
         //TODO name tracks correct
@@ -37,6 +36,8 @@ MuseScore {
 
         var cursor = curScore.newCursor()
         cursor.rewind(0)
+        var numerator = cursor.segment.parent.timesigNominal.numerator*1.0
+        var denominator = cursor.segment.parent.timesigNominal.denominator*1.0
         var maximumDuration = curScore.lastSegment.tick
 
         var mapPitches = new Map();
@@ -113,8 +114,8 @@ MuseScore {
         returnString += "fromMeasure = nil    # nil or Number \r\n";
         returnString += "untilMeasure = nil   # nil or Number \r\n";
         returnString += " \r\n";
-        returnString += "numerator = 6.0 \r\n"; //TODO
-        returnString += "denominator = 8.0 \r\n"; //TODO
+        returnString += "numerator = " + numerator + " \r\n";
+        returnString += "denominator = " + denominator + " \r\n";
         returnString += "quarterPerMeasure = numerator/(denominator/4.0) \r\n";
         returnString += " \r\n";
 

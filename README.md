@@ -13,7 +13,7 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 - No support for changing BPM
 
 # Todos
-- detect numerator / denominator
+- flags bool or number, not mixed
 - Tie/Slur-Support
 - create better beat
 - name tracks correct
