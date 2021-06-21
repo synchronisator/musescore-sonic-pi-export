@@ -19,14 +19,6 @@ MuseScore {
         if (typeof curScore === 'undefined')
             Qt.quit();
 
-        //TODO Tie/Slur-Support
-        //TODO name tracks correct
-
-        //UI
-        // - midi or not
-        // - metronome or not
-        // - choose outputfile
-
         var isMidi = 1; //TODO UI
         var hasMetronome = 1; //TODO UI
         var scoreName = curScore.scoreName
@@ -126,7 +118,7 @@ MuseScore {
         returnString += " \r\n";
 
         if(hasMetronome){
-            returnString += "enableBeat = true \r\n";
+            returnString += "enableBeat = 1 \r\n";
             returnString += "simpleMetronomeBeat = ' 9";
             for (var beat = 1; beat < numerator ;beat++ ) {
                 returnString += "6"
@@ -183,7 +175,7 @@ MuseScore {
             returnString += "end \r\n";
             returnString += " \r\n";
             returnString += "live_loop :metronome do \r\n"
-            returnString += "if(!enableBeat) \r\n"
+            returnString += "if(enableBeat == 0) \r\n"
             returnString += "stop \r\n"
             returnString += "end \r\n"
             returnString += "tick('metronome') \r\n"
