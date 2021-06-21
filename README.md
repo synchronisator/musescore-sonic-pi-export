@@ -15,7 +15,6 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 # Todos
 - flags bool or number, not mixed
 - Tie/Slur-Support
-- create better beat
 - name tracks correct
   
 - Create UI

@@ -20,7 +20,6 @@ MuseScore {
             Qt.quit();
 
         //TODO Tie/Slur-Support
-        //TODO create better beat
         //TODO name tracks correct
 
         //UI
@@ -114,8 +113,8 @@ MuseScore {
         returnString += "fromMeasure = nil    # nil or Number \r\n";
         returnString += "untilMeasure = nil   # nil or Number \r\n";
         returnString += " \r\n";
-        returnString += "numerator = " + numerator + " \r\n";
-        returnString += "denominator = " + denominator + " \r\n";
+        returnString += "numerator = " + numerator + ".0 \r\n";
+        returnString += "denominator = " + denominator + ".0 \r\n";
         returnString += "quarterPerMeasure = numerator/(denominator/4.0) \r\n";
         returnString += " \r\n";
 
@@ -127,10 +126,14 @@ MuseScore {
         returnString += " \r\n";
 
         if(hasMetronome){
-            returnString += "enableBeat = true \r\n"; //TODO
-            returnString += "simpleMetronomeBeat = ' 966 '  # Number for 0.1 amp or - for nothing \r\n"; //TODO
-            returnString += "simpleMetronomeBeatSleep = 0.5 \r\n"; //TODO
-            returnString += "simpleMetronomeAmpMultiplier = 5 \r\n";
+            returnString += "enableBeat = true \r\n";
+            returnString += "simpleMetronomeBeat = ' 9";
+            for (var beat = 1; beat < numerator ;beat++ ) {
+                returnString += "6"
+            }
+            returnString += " '  # Number for 0.1 amp or - for nothing \r\n";
+            returnString += "simpleMetronomeBeatSleep = " + (4.0/denominator) + "\r\n";
+            returnString += "simpleMetronomeAmpMultiplier = 2 \r\n";
         }
 
         returnString += " \r\n";
