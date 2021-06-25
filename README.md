@@ -14,8 +14,9 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 - No support for changing BPM within the score
 
 # Todos
+- Metronome before Starting melody
+- Different Outputs
+- Different Midi channels
 - Tie/Slur-Support
 - Create UI
-    - midi or not
-    - metronome or not
     - choose outputfile

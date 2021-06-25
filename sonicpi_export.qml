@@ -36,8 +36,8 @@ MuseScore {
 
         var cursor = curScore.newCursor()
         cursor.rewind(0)
-        var numerator = cursor.segment.parent.timesigNominal.numerator*1.0
-        var denominator = cursor.segment.parent.timesigNominal.denominator*1.0
+        var numerator = cursor.measure.timesigNominal.numerator*1.0
+        var denominator = cursor.measure.timesigNominal.denominator*1.0
         var maximumDuration = curScore.lastSegment.tick
 
         var mapPitches = new Map();
@@ -65,12 +65,16 @@ MuseScore {
                     var element = cursor.segment.elementAt(currentStaff);
                     if(element !== null){
                         if(staffName == null){
-                            staffName = element.staff.part.longName
+                            if(element.staff == null){
+                              staffName = "undefined"
+                            } else {
+                              staffName = element.staff.part.longName
+                            }
                             mapPitches.set(staffName + "_" + staff + "_" +  i, "");
                             mapRests.set(staffName + "_" + staff + "_" +  i, "");
                         }
                         if (element.type === Element.CHORD) {
-                            var duration = ((element.globalDuration.numerator /element.globalDuration.denominator)*4.0)
+                            var duration = ((element.duration.numerator /element.duration.denominator)*4.0)
                             lastTick += (duration*480)
                             for (var j=0; j<element.notes.length; j++) {
                                 hasContent = true;
@@ -82,7 +86,7 @@ MuseScore {
                                 }
                             }
                         } else if (element.type ===  Element.REST){
-                            var duration = ((element.globalDuration.numerator /element.globalDuration.denominator)*4.0)
+                            var duration = ((element.duration.numerator /element.duration.denominator)*4.0)
                             lastTick += (duration*480)
                             s += "nil,";
                             r += duration + ","
