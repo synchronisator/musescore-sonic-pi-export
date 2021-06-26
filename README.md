@@ -12,6 +12,7 @@ A Musescore 3.x Plugin to export a score to Sonic Pi Code
 # Limitations
 - No support for repeatings. Use "Tools > Unroll Repeats"
 - No support for changing BPM within the score
+- Staff-Names that include a "." or other special characters, may cause syntax errors in SonicPi
 
 # Todos
 - Metronome before Starting melody

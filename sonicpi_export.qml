@@ -43,8 +43,8 @@ MuseScore {
         var mapPitches = new Map();
         var mapRests = new Map();
 
-        for (var staff=0; staff<curScore.nstaves; staff++) {
-            for (var i=0; i<4; i++) {
+        for (var staff = 0; staff < curScore.nstaves; staff++) {
+            for (var i = 0; i < 4; i++) {
                 var hasContent = false;
                 var currentStaff = (staff*4) +i;
                 var cursor = curScore.newCursor()
@@ -65,7 +65,7 @@ MuseScore {
                     var element = cursor.segment.elementAt(currentStaff);
                     if(element !== null){
                         if(staffName == null){
-                            if(element.staff == null){
+                            if(element.staff === null){
                               staffName = "undefined"
                             } else {
                               staffName = element.staff.part.longName
@@ -128,11 +128,12 @@ MuseScore {
         returnString += "quarterPerMeasure = numerator/(denominator/4.0) \r\n";
         returnString += " \r\n";
 
-        for (var key of mapPitches.keys()) {
-            if(mapPitches.get(key)  !== ""){
-                returnString += ("playTrack_" + key + " = 1 \r\n");
+        mapPitches.forEach((value,key) => {
+                if(value  !== ""){
+                    returnString += ("playTrack_" + key + " = 1 \r\n");
+                }
             }
-        }
+        )
         returnString += " \r\n";
 
         if(hasMetronome){
@@ -207,7 +208,7 @@ MuseScore {
             returnString += " \r\n";
         }
 
-        for (var key of mapPitches.keys()) {
+        mapPitches.forEach((value,key) => {
             if(mapPitches.get(key)  !== ""){
                 returnString += ("live_loop :loop_" + key + " do\r\n");
 
@@ -215,7 +216,7 @@ MuseScore {
                 returnString += ("stop \r\n");
                 returnString += ("end \r\n");
 
-                returnString += "pitches = [" + mapPitches.get(key) + "] \r\n";
+                returnString += "pitches = [" + value + "] \r\n";
                 returnString += "rests = [" + mapRests.get(key) + "] \r\n";
                 if(isMidi){
                     returnString += "play_timed 1,"
@@ -225,7 +226,7 @@ MuseScore {
                 returnString += ( " pitches,rests \r\n" );
                 returnString += ("end #" + key + "\r\n");
             }
-        }
+        })
         sonicFile.source = outputFile
         console.log(sonicFile.source)
         console.log("Successfull? " + sonicFile.write(returnString))
